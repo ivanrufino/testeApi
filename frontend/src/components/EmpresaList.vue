@@ -1,13 +1,13 @@
 <template>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Lista de Empresa</a>
-    
-  </div>
-</nav>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Lista de Empresa</a>
+
+    </div>
+  </nav>
   <div class="container mt-2">
     <!-- Tabela de Empresas -->
-     <router-link :to="{ name: 'CriarEmpresa'}" class="btn btn-info btn-sm">Criar Empresa</router-link>
+    <router-link :to="{ name: 'CriarEmpresa' }" class="btn btn-info btn-sm">Criar Empresa</router-link>
     <table class="table table-striped table-hover table-responsive">
       <!-- Cabeçalho da Tabela -->
       <thead>
@@ -25,10 +25,13 @@
           <td>{{ empresa.empresa }}</td>
           <td>{{ empresa.sigla }}</td>
           <td>
-            <router-link :to="{ name: 'visualizarEmpresa', params: { codigo: empresa.codigo } }" class="btn btn-info btn-sm me-1" >Visualizar</router-link>
-            <router-link :to="{ name: 'editarEmpresa', params: { codigo: empresa.codigo } }" class="btn btn-warning btn-sm me-1">Editar</router-link>
+            <router-link :to="{ name: 'visualizarEmpresa', params: { codigo: empresa.codigo } }"
+              class="btn btn-info btn-sm me-1">Visualizar</router-link>
+            <router-link :to="{ name: 'editarEmpresa', params: { codigo: empresa.codigo } }"
+              class="btn btn-warning btn-sm me-1">Editar</router-link>
             <button @click="excluirEmpresa(empresa)" class="btn btn-danger btn-sm me-1">Excluir</button>
-            <router-link :to="{ name: 'verClientes', params: { codigoEmpresa: empresa.codigo } }" class="btn btn-info btn-sm me-1">Ver Clientes</router-link>
+            <router-link :to="{ name: 'verClientes', params: { codigoEmpresa: empresa.codigo } }"
+              class="btn btn-info btn-sm me-1">Ver Clientes</router-link>
           </td>
         </tr>
       </tbody>
@@ -62,29 +65,14 @@ export default {
       if (confirmacao) {
         try {
           await empresaService.delete(empresa.codigo);
-          // Atualize a lista de empresas após a exclusão
+          // Atualizando a lista de empresas após a exclusão
           this.fetchEmpresas();
         } catch (error) {
           console.error('Erro ao excluir empresa:', error);
         }
       }
     },
-   /* async editarEmpresa(empresa) {
-      try {
-         const empresaEdit=   await empresaService.get(empresa.codigo);
-          this.formulario = {
-        codigo: empresaEdit.codigo,
-        empresa: empresaEdit.empresa,
-        sigla: empresaEdit.sigla,
-        razao_social: empresaEdit.razao_social,
-        modoVisualizacao: false,
-      };
-          
-        } catch (error) {
-          console.error('Erro ao excluir empresa:', error);
-        }
-      
-    },*/
+    
   },
 };
 </script>

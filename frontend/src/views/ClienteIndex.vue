@@ -1,6 +1,6 @@
 <template>
   <div>
-    
+
     <ClienteList :codigoEmpresa="codigoEmpresa" />
   </div>
 </template>
@@ -14,7 +14,6 @@ export default {
   },
   computed: {
     codigoEmpresa() {
-      // Lógica para obter o código da empresa da rota (this.$route.params.codigoEmpresa)
       return this.$route.params.codigoEmpresa;
     }
   }

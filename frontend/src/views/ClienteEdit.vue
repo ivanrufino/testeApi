@@ -1,33 +1,21 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Editar Cliente</a>
-    
-  </div>
-</nav>
-  
-   <div class="container mt-2">
-    
-    <clienteForm 
-        :codigo="codigo" 
-        :razao_social="razao_social"
-        :tipo="tipo"
-        :cpf_cnpj="cpf_cnpj"
-        
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Editar Cliente</a>
 
-        @atualizar-codigo="atualizarForm('codigo', $event)"
-        @atualizar-razao_social="atualizarForm('razao_social', $event)"
-        @atualizar-tipo="atualizarForm('tipo', $event)"
-        @atualizar-cpf_cnpj="atualizarForm('cpf_cnpj', $event)"
+    </div>
+  </nav>
 
-        @salvar="salvar"
-        :mensagensErro="mensagensErro"
-        
-    />
-    
-    
-    
-    
+  <div class="container mt-2">
+
+    <clienteForm :codigo="codigo" :razao_social="razao_social" :tipo="tipo" :cpf_cnpj="cpf_cnpj"
+      @atualizar-codigo="atualizarForm('codigo', $event)" @atualizar-razao_social="atualizarForm('razao_social', $event)"
+      @atualizar-tipo="atualizarForm('tipo', $event)" @atualizar-cpf_cnpj="atualizarForm('cpf_cnpj', $event)"
+      @salvar="salvar" :mensagensErro="mensagensErro" />
+
+
+
+
   </div>
 </template>
 
@@ -48,11 +36,11 @@ export default {
     };
   },
   computed: {
-    codigo() {return this.$route.params.codigo;    },
+    codigo() { return this.$route.params.codigo; },
 
-    razao_social() {return this.clienteData ? this.clienteData.razao_social : null;    },
-    tipo() {return this.clienteData ? this.clienteData.tipo : "";     },
-    cpf_cnpj() {return this.clienteData ? this.clienteData.cpf_cnpj : null;   },
+    razao_social() { return this.clienteData ? this.clienteData.razao_social : null; },
+    tipo() { return this.clienteData ? this.clienteData.tipo : ""; },
+    cpf_cnpj() { return this.clienteData ? this.clienteData.cpf_cnpj : null; },
 
   },
   async mounted() {
@@ -63,7 +51,7 @@ export default {
     async fetchClienteData() {
       try {
         const codigoEmpresa = this.$route.params.codigoEmpresa;
-        const response = await  await clienteService.get(codigoEmpresa, `${this.codigo}`);
+        const response = await await clienteService.get(codigoEmpresa, `${this.codigo}`);
         console.log(response.data.cliente)
         this.clienteData = response.data.cliente;
       } catch (error) {
@@ -71,33 +59,33 @@ export default {
       }
     },
     atualizarForm(campo, valor) {
-      // Atualize os dados do formulário quando o evento for recebido
-     const newval = campo =="tipo" ?valor : valor.target.value;
+      
+      const newval = campo == "tipo" ? valor : valor.target.value;
       this.clienteData[campo] = newval;
     },
     async salvar() {
       try {
-        // Os dados já estão vinculados às propriedades do componente
-         const codigoEmpresa = this.$route.params.codigoEmpresa;
-        const dados = await clienteService.update(codigoEmpresa,this.codigo, this.clienteData);
-        
-        
+      
+        const codigoEmpresa = this.$route.params.codigoEmpresa;
+        const dados = await clienteService.update(codigoEmpresa, this.codigo, this.clienteData);
+
+
         console.log('Empresa atualizada com sucesso!');
-        if(dados.status==200){
-             this.$router.push({
-            name: 'verClientes', 
+        if (dados.status == 200) {
+          this.$router.push({
+            name: 'verClientes',
             params: {
               codigoEmpresa: this.$route.params.codigoEmpresa,
-              
+
             }
           });
         }
       } catch (error) {
-        this.mensagensErro = error.response.data.errors || {"Error": ['Erro desconhecido. Tente novamente.']};
+        this.mensagensErro = error.response.data.errors || { "Error": ['Erro desconhecido. Tente novamente.'] };
         console.error('Erro ao salvar Cliente:', error.response.data.errors);
       }
     },
-    
+
   },
 };
 </script>

@@ -6,11 +6,11 @@ export default {
   getByEmpresa(codigoEmpresa) {
     return axios.get(`${BASE_URL}/${codigoEmpresa}/clientes`);
   },
-  get(codigoEmpresa,codigo) {
+  get(codigoEmpresa, codigo) {
     return axios.get(`${BASE_URL}/${codigoEmpresa}/clientes/${codigo}`);
   },
-  create(codigoEmpresa,data) {
-    console.log("data",data)
+  create(codigoEmpresa, data) {
+    console.log("data", data)
     return axios.post(`${BASE_URL}/${codigoEmpresa}/clientes`, data);
   },
   update(codigoEmpresa, codigo, data) {

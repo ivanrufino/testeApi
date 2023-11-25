@@ -1,6 +1,6 @@
 <template>
   <div>
-   
+
     <EmpresaList />
   </div>
 </template>

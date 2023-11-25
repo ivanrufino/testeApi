@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\API;
+
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
@@ -16,22 +17,23 @@ class ClienteApiController extends Controller
     }
 
     public function store(Request $request, $codigoEmpresa)
-    { try {
-        $validator = \Validator::make($request->all(), [
-            'codigo' => 'required|numeric|unique:clientes,codigo,NULL,id,empresa,' . $codigoEmpresa,
-          
-            'razao_social' => 'required|string|max:255',
-            'tipo' => 'required|in:PJ,PF,pj,pf',
-            'cpf_cnpj' => 'required|string|max:14',
-            // Adicione outras validações conforme necessário
-        ]);
+    {
+        try {
+            $validator = \Validator::make($request->all(), [
+                'codigo' => 'required|numeric|unique:clientes,codigo,NULL,id,empresa,' . $codigoEmpresa,
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
+                'razao_social' => 'required|string|max:255',
+                'tipo' => 'required|in:PJ,PF,pj,pf',
+                'cpf_cnpj' => 'required|string|max:14',
+                // Adicione outras validações conforme necessário
+            ]);
 
-       
-            
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
+
+
+
             $cliente = Cliente::create(array_merge($request->all(), ['empresa' => $codigoEmpresa]))->makeHidden('recnum');
             return response()->json(['cliente' => $cliente], 201);
         } catch (\Exception $e) {
@@ -52,11 +54,11 @@ class ClienteApiController extends Controller
 
     public function update(Request $request, $codigoEmpresa, $codigoCliente)
     {
-        
+
         try {
             $validator = \Validator::make($request->all(), [
                 'codigo' => 'numeric|unique:clientes,codigo,' . $codigoCliente . ',codigo,empresa,' . $codigoEmpresa,
-              
+
                 'razao_social' => 'string|max:255',
                 'tipo' => 'in:PJ,PF',
                 'cpf_cnpj' => 'string|max:14',

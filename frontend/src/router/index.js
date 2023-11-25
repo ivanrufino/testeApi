@@ -1,5 +1,3 @@
-// src/router/index.js
-
 import { createRouter, createWebHistory } from 'vue-router';
 import EmpresaIndex from '@/views/EmpresaIndex.vue';
 import EmpresaCreate from '@/views/EmpresaCreate.vue';
@@ -23,7 +21,7 @@ const routes = [
 
   { path: '/empresas/:codigoEmpresa/clientes/:codigo/visualizar', name: 'visualizarCliente', component: ClienteView },
   { path: '/empresas/:codigoEmpresa/clientes/:codigo/editar', name: 'editarCliente', component: ClienteEdit },
- 
+
 ];
 
 const router = createRouter({
